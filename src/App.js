@@ -8,11 +8,11 @@ function App() {
   return (
     <>
       <BrowserRouter>
-       {/* <AuthForm/> */}
+       
         <Routes>
         <Route path='/' element={<AuthForm/>} />
           <Route path="/Home" element={<Home />} />
-          <Route path='/View' element={<View />} />
+          <Route path="/View" element={<View />} />
 
           <Route path="/upgrade/:_id" element={<Upgrade />} />
         </Routes>

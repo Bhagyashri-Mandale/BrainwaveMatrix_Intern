@@ -47,17 +47,16 @@
   justify-content: center;
   padding: 50px;
 }
-.view_container
+ .view_container
 {
-  background:linear-gradient(rgba(31, 22, 22, 0.5), rgba(153, 138, 138, 0.5)), 
-   url("./Assets/Images/listing.webp") no-repeat center center;
-  background-size: cover;
+
+
   height: 100vh; 
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 50px;
-}
+} 
 .signup-container {
   
   background:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 

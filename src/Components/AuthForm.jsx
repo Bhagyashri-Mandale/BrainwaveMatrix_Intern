@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { Form, Button, Container, Row, Col, Card, CardBody } from "react-bootstrap";
 import { FaLock, FaEnvelope } from "react-icons/fa";
 import axios from "axios";
-import {useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const AuthForm = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const [showSignIn, setShowSignIn] = useState(true); // Toggle state
   const [fname, setName] = useState("");
   const [lname, setLastname] = useState("");
@@ -13,31 +13,37 @@ const AuthForm = () => {
   const [password, setPassword] = useState("");
   const [cpassword, setCpassword] = useState("");
   const [selectvalues, setAllChecked] = useState(false);
-//   const [image, setImage] = useState(null);
+  //   const [image, setImage] = useState(null);
   const [error, setError] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     if (!showSignIn && password !== cpassword) {
       setError("Passwords do not match!");
       return;
     }
 
     const userData = {
-     email,
-     password
+      fname,
+      lname,
+      email,
+      password,
+      cpassword
     }
     if (!showSignIn) {
-        userData.fname = fname;
-        userData.lname = lname;
-        userData.cpassword = cpassword;
-        userData.selectvalues = selectvalues;
-    //   userData.append("image", image);
+      userData.fname = fname;
+      userData.lname = lname;
+      userData.email = email;
+      userData.password = password;
+      userData.cpassword = cpassword;
+      userData.selectvalues = selectvalues;
+      //   userData.append("image", image);
     }
 
     axios.post(`http://localhost:8000/${showSignIn ? "login" : "addlogin"}`, userData)
       .then((res) => {
+        localStorage.setItem("token", res.data.token);  // Store token
         console.log(res.data);
         alert(showSignIn ? "Signed in successfully" : "Signed up successfully");
 
@@ -49,11 +55,11 @@ const AuthForm = () => {
         setAllChecked(false);
         // setImage(null);
         setError(null);
-        
+
         if (showSignIn) {
-            navigate("/Home"); // Redirect to Home page after successful sign-in
-          }
-        
+          navigate("/Home"); // Redirect to Home page after successful sign-in
+        }
+
       })
       .catch((error) => {
         console.log(error);
@@ -116,11 +122,11 @@ const AuthForm = () => {
                             value={email}
                             required
                             onChange={(e) => setEmail(e.target.value)}
-                            
+
                           /><span className="input-group-text bg-transparent border-0">
-                          <FaEnvelope className="bg-transparent fs-1"/>
-                        </span>
-                          
+                            <FaEnvelope className="bg-transparent fs-1" />
+                          </span>
+
                         </div>
                       </Form.Group>
                     </Col>
@@ -140,7 +146,7 @@ const AuthForm = () => {
                             onChange={(e) => setPassword(e.target.value)}
                           />
                           <span className="input-group-text bg-transparent border-0">
-                            <FaLock className="bg-transparent fs-1"/>
+                            <FaLock className="bg-transparent fs-1" />
                           </span>
                         </div>
                       </Form.Group>
